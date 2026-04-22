@@ -3,6 +3,7 @@ import portraitImg from './assets/hero.png'
 
 function App() {
   const [isVisible, setIsVisible] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const workRef = useRef(null)
 
   useEffect(() => {
@@ -14,7 +15,7 @@ function App() {
       title: 'Solaris AI',
       category: 'Generative Intelligence',
       year: '2024',
-      image: portraitImg, // Using the new premium portrait as a placeholder for projects too
+      image: portraitImg,
     },
     {
       title: 'Nexus Commerce',
@@ -31,14 +32,15 @@ function App() {
   ]
 
   const scrollToWork = (e) => {
-    e.preventDefault()
+    if (e) e.preventDefault()
     workRef.current?.scrollIntoView({ behavior: 'smooth' })
+    setIsMenuOpen(false)
   }
 
   return (
     <div className="bg-[#0a0a0a]">
       {/* NAVBAR */}
-      <nav>
+      <nav className={isMenuOpen ? 'menu-active' : ''}>
         <a href="#" className="nav-logo">
           <div className="nav-logo-mark">H<sup>2</sup></div>
           <span className="nav-logo-name">Huzaifa Haris</span>
@@ -51,8 +53,25 @@ function App() {
           <li><a href="#">Technology</a></li>
         </ul>
 
-        <a href="#" className="nav-cta">Contact</a>
+        <div className="nav-right">
+          <a href="#" className="nav-cta">Contact</a>
+          <button className={`menu-toggle ${isMenuOpen ? 'active' : ''}`} onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
       </nav>
+
+      {/* MOBILE MENU */}
+      <div className={`mobile-menu ${isMenuOpen ? 'active' : ''}`}>
+        <ul className="mobile-nav-links">
+          <li><a href="#" onClick={() => setIsMenuOpen(false)}>About</a></li>
+          <li><a href="#work" onClick={scrollToWork}>Work</a></li>
+          <li><a href="#" onClick={() => setIsMenuOpen(false)}>Process</a></li>
+          <li><a href="#" onClick={() => setIsMenuOpen(false)}>Technology</a></li>
+          <li><a href="#" className="mobile-nav-cta" onClick={() => setIsMenuOpen(false)}>Contact</a></li>
+        </ul>
+      </div>
 
       {/* SIDE SOCIALS */}
       <div className="side-socials">
