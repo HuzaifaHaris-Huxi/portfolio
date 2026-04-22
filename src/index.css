@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Outfit';
+  src: url('./assets/Outfit/Outfit-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  font-family: var(--font-sans);
+  background-color: #000000;
+  color: #ffffff;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #000000;
+  overflow-x: hidden;
+}
+
+/* Scroll Container Utilities */
+.scroll-snap-x {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scroll-snap-align-center {
+  scroll-snap-align: center;
+}
+
+/* Base text styling */
+.nav-text {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+@layer utilities {
+  .btn-contact {
+    @apply border border-white/40 px-8 py-3 text-[10px] font-black tracking-[0.3em] uppercase text-white transition-all duration-500 bg-transparent;
+  }
+  
+  .btn-contact:hover {
+    @apply bg-white text-black;
+  }
+
+  .text-soft-blend {
+    mix-blend-mode: overlay;
+    color: #ffffff;
+  }
+
+  .portrait-matte {
+    filter: grayscale(1) contrast(1.05) brightness(0.9);
+    mask-image: 
+      linear-gradient(to top, transparent 0%, black 20%, black 80%, transparent 100%),
+      linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+    mask-composite: intersect;
+    -webkit-mask-image: 
+      linear-gradient(to top, transparent 0%, black 15%, black 85%, transparent 100%),
+      linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+    -webkit-mask-composite: source-in;
+  }
+
+  .grain-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.12;
+    pointer-events: none;
+    z-index: 100;
+    mix-blend-mode: soft-light;
+  }
+
+  /* Hide scrollbar but keep functionality */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  /* Vertical Text utility for sidebars */
+  .vertical-text {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+  }
+}
+
+.mobile-menu-overlay {
+  @apply fixed inset-0 z-[100] bg-black/95 backdrop-blur-2xl flex flex-col items-center justify-center gap-8 transition-all duration-700 ease-in-out;
+}
+
+.animate-title {
+  animation: slideUpFade 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
