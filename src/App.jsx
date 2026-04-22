@@ -98,15 +98,15 @@ function App() {
 
           <div className="stats-row">
             <div className="stat">
-              <div className="stat-num">5+</div>
+              <div className="stat-num">1.5+</div>
               <div className="stat-label">Years exp.</div>
             </div>
             <div className="stat">
-              <div className="stat-num">30+</div>
+              <div className="stat-num">10+</div>
               <div className="stat-label">Projects</div>
             </div>
             <div className="stat">
-              <div className="stat-num">12+</div>
+              <div className="stat-num">7+</div>
               <div className="stat-label">Clients</div>
             </div>
           </div>
