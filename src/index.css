@@ -639,8 +639,14 @@ nav.menu-active {
     border-bottom: none; /* Removed extra line */
   }
 
-  .hero-right-content { padding: 0 28px 40px; } /* Pushed text lower on mobile */
-  .bottom-bar { padding: 0 28px; }
+  .hero-right-content { padding: 0 28px 100px; } /* Increased padding to avoid overlap with bottom-bar */
+  .bottom-bar { 
+    padding: 0 24px; 
+    height: 60px; /* Reduced height to save space */
+  }
+  .scroll-indicator, .resume-link {
+    font-size: 10px;
+  }
   .side-socials { display: none; }
 }
 
