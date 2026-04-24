@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { Mail, Phone } from 'lucide-react'
 import portraitImg from './assets/hero.png'
+import resumePdf from './Huzaifa_Haris_Resume.pdf'
 import ContactModal from './components/ContactModal.jsx'
 import AdminResponses from './pages/AdminResponses.jsx'
 
@@ -208,7 +209,11 @@ function PortfolioPage({ onContact }) {
                 <path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </a>
-            <a href="#" className="btn-ghost">
+            <a
+              href={resumePdf}
+              download="Huzaifa_Haris_Resume.pdf"
+              className="btn-ghost"
+            >
               <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
                 <path d="M5 1v8M1 5l4 4 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
