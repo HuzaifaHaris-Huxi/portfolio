@@ -1,5 +1,13 @@
 import { useState, useEffect, useRef } from 'react'
 import { X, Send, CheckCircle2 } from 'lucide-react'
+import emailjs from '@emailjs/browser'
+
+// ── EmailJS Config ──────────────────────────────────────────
+// Get these from https://dashboard.emailjs.com
+const EMAILJS_SERVICE_ID  = 'service_w9jri7t'
+const EMAILJS_TEMPLATE_ID = 'template_aj80bhw'
+const EMAILJS_PUBLIC_KEY  = 'lHd_L0TmN4Upsfpcb'
+// ────────────────────────────────────────────────────────────
 
 export default function ContactModal({ isOpen, onClose }) {
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' })
@@ -60,24 +68,20 @@ export default function ContactModal({ isOpen, onClose }) {
     setStatus('submitting')
 
     try {
-      const res = await fetch('https://formspree.io/f/xqewnbzr', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({
-          name: form.name.trim(),
-          email: form.email.trim(),
-          phone: form.phone.trim() || undefined,
-          message: form.message.trim(),
-        }),
-      })
-
-      if (res.ok) {
-        setStatus('success')
-        // Auto-close after success message
-        setTimeout(() => { onClose() }, 2800)
-      } else {
-        setStatus('error')
-      }
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name:    form.name.trim(),
+          from_email:   form.email.trim(),
+          phone:        form.phone.trim() || 'Not provided',
+          message:      form.message.trim(),
+          to_email:     'huzaifaharis.dev@gmail.com',
+        },
+        EMAILJS_PUBLIC_KEY
+      )
+      setStatus('success')
+      setTimeout(() => { onClose() }, 2800)
     } catch {
       setStatus('error')
     }
@@ -117,6 +121,9 @@ export default function ContactModal({ isOpen, onClose }) {
             </div>
             <h3 className="modal-success-title">Message received!</h3>
             <p className="modal-success-sub">I'll get back to you as soon as possible. Closing shortly…</p>
+            <p className="modal-success-spam">
+              Didn't receive a confirmation? Check your <strong>spam folder</strong>.
+            </p>
           </div>
         ) : (
           <form className="modal-form" onSubmit={handleSubmit} noValidate>

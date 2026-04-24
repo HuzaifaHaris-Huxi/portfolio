@@ -1460,6 +1460,13 @@ nav.menu-active {
   color: var(--fg);
 }
 .modal-success-sub { color: var(--muted); font-size: 15px; line-height: 1.6; }
+.modal-success-spam {
+  font-size: 12px;
+  color: rgba(245,244,240,0.25);
+  letter-spacing: 0.03em;
+  margin-top: -4px;
+}
+.modal-success-spam strong { color: rgba(245,244,240,0.45); font-weight: 500; }
 .nav-cta { background: none; cursor: pointer; font-family: inherit; }
 .mobile-nav-cta { background: none; cursor: pointer; font-family: inherit; }
 @media (max-width: 600px) {
