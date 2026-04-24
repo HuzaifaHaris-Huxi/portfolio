@@ -246,6 +246,12 @@ function App() {
                   <p className="project-about">{project.about}</p>
                 </div>
               </div>
+              <div className="project-info">
+                <div>
+                  <div className="project-cat">{project.category}</div>
+                  <h3 className="project-name">{project.title}</h3>
+                </div>
+              </div>
             </div>
           ))}
         </div>
