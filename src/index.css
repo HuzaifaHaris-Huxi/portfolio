@@ -662,6 +662,8 @@ nav.menu-active {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 24px;
 }
 
 .work-nav-buttons {
@@ -798,6 +800,26 @@ nav.menu-active {
 
 @media (max-width: 900px) {
   .work-header, .project-grid { padding: 0 28px; }
+  .work-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+  .work-nav-buttons {
+    align-self: flex-start;
+  }
   .project-card { flex: 0 0 85vw; }
+  
+  .project-hover-content {
+    padding: 20px;
+    gap: 12px;
+  }
+  .project-logo {
+    width: 120px;
+    max-height: 60px;
+  }
+  .project-about {
+    font-size: 14px;
+  }
 }
 
