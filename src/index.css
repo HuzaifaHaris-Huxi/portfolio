@@ -110,6 +110,7 @@
 html {
   font-size: 16px;
   scroll-behavior: smooth;
+  overflow-x: hidden; /* prevent horizontal scrollbar from any overflowing child */
 }
 
 body {
@@ -1156,7 +1157,7 @@ nav.menu-active {
 
 .footer-cta-title {
   font-family: 'Syne', sans-serif;
-  font-size: clamp(32px, 5vw, 88px);
+  font-size: clamp(32px, 4.5vw, 88px);
   font-weight: 800;
   line-height: 1;
   letter-spacing: -0.02em;
@@ -1164,6 +1165,7 @@ nav.menu-active {
   color: var(--fg);
   max-width: 55%;
   word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .footer-contact-info {
@@ -1285,7 +1287,7 @@ nav.menu-active {
 
   .tech-section { padding: 60px 20px; }
   .tech-header { margin-bottom: 36px; }
-  .tech-title { font-size: clamp(24px, 7vw, 36px); }
+  .tech-title { font-size: clamp(20px, 5.5vw, 32px); overflow: hidden; text-overflow: ellipsis; }
   .tech-bento { grid-template-columns: 1fr; gap: 16px; }
   .bento-item { padding: 28px 24px; min-height: unset; }
   .bento-title { font-size: 20px; margin-bottom: 10px; }
@@ -1293,10 +1295,18 @@ nav.menu-active {
 
   .footer-section { padding: 60px 20px 28px; }
   .footer-top { flex-direction: column; gap: 48px; margin-bottom: 60px; }
-  .footer-cta-title { max-width: 100%; font-size: clamp(28px, 9vw, 48px); line-height: 1; word-break: break-word; }
+  .footer-cta-title { max-width: 100%; font-size: clamp(24px, 7vw, 44px); line-height: 1; word-break: break-word; overflow-wrap: break-word; }
   .footer-contact-info { width: 100%; gap: 32px; }
   .footer-link { font-size: 16px; }
   .footer-bottom { flex-direction: column; gap: 20px; align-items: flex-start; }
+}
+
+/* ── Extra small screens ≤ 480px ── */
+@media (max-width: 480px) {
+  .tech-title { font-size: clamp(18px, 5vw, 28px); }
+  .footer-cta-title { font-size: clamp(22px, 6.5vw, 36px); }
+  .footer-section { padding: 48px 16px 24px; }
+  .tech-section { padding: 48px 16px; }
 }
 
 
