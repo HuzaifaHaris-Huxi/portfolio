@@ -5,6 +5,7 @@ function App() {
   const [isVisible, setIsVisible] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const workRef = useRef(null)
+  const sliderRef = useRef(null)
 
   useEffect(() => {
     setIsVisible(true)
@@ -12,24 +13,62 @@ function App() {
 
   const projects = [
     {
-      title: 'Solaris AI',
-      category: 'Generative Intelligence',
+      title: 'Qonkar',
+      category: 'Platform',
       year: '2024',
-      image: portraitImg,
+      image: new URL('./project/1.qonkar.png', import.meta.url).href,
+      logo: new URL('./project/project_logos/qonkar.svg', import.meta.url).href,
+      about: 'A comprehensive digital platform revolutionizing local services with an intuitive user experience and robust functionality.',
     },
     {
-      title: 'Nexus Commerce',
-      category: 'High-End Fashion',
+      title: 'Scholian',
+      category: 'Education',
       year: '2023',
-      image: portraitImg, 
+      image: new URL('./project/2.scholian.png', import.meta.url).href,
+      logo: new URL('./project/project_logos/scholian.svg', import.meta.url).href,
+      about: 'An innovative ed-tech solution designed to streamline school management and enhance student learning outcomes.',
     },
     {
-      title: 'Echo Systems',
-      category: 'Architectural Data',
+      title: 'Fayz Soft',
+      category: 'Software Solutions',
+      year: '2023',
+      image: new URL('./project/3.fayz_soft.png', import.meta.url).href,
+      logo: new URL('./project/project_logos/fayz_soft.svg', import.meta.url).href,
+      about: 'Custom enterprise software delivering scalable business solutions and operational efficiency.',
+    },
+    {
+      title: 'Vetuk',
+      category: 'Veterinary Services',
       year: '2024',
-      image: portraitImg,
+      image: new URL('./project/4.vetuk.png', import.meta.url).href,
+      logo: new URL('./project/project_logos/vetuk.svg', import.meta.url).href,
+      about: 'A modern healthcare platform tailored for veterinary practices to manage appointments, records, and client communication.',
+    },
+    {
+      title: 'Doctor',
+      category: 'Healthcare',
+      year: '2024',
+      image: new URL('./project/5.Doctor.png', import.meta.url).href,
+      logo: new URL('./project/project_logos/doctor.svg', import.meta.url).href,
+      about: 'An advanced medical portal enabling seamless doctor-patient interactions, telemedicine, and health tracking.',
+    },
+    {
+      title: 'Sellvixa',
+      category: 'E-commerce',
+      year: '2024',
+      image: new URL('./project/6.sellvixa.png', import.meta.url).href,
+      logo: new URL('./project/project_logos/sellvixa.svg', import.meta.url).href,
+      about: 'A premium e-commerce experience featuring high-performance storefronts, secure payments, and dynamic inventory.',
     }
   ]
+
+  const scrollLeft = () => {
+    sliderRef.current?.scrollBy({ left: -400, behavior: 'smooth' })
+  }
+
+  const scrollRight = () => {
+    sliderRef.current?.scrollBy({ left: 400, behavior: 'smooth' })
+  }
 
   const scrollToWork = (e) => {
     if (e) e.preventDefault()
@@ -180,23 +219,32 @@ function App() {
       <section id="work" ref={workRef}>
         <div className="work-header">
           <div>
-            <div className="work-num">(001 — 003)</div>
+            <div className="work-num">(001 — 006)</div>
             <h2 className="work-title">Curated Work</h2>
+          </div>
+          <div className="work-nav-buttons">
+            <button className="slider-btn" onClick={scrollLeft} aria-label="Previous">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+            <button className="slider-btn" onClick={scrollRight} aria-label="Next">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
           </div>
         </div>
 
-        <div className="project-grid">
+        <div className="project-grid" ref={sliderRef}>
           {projects.map((project, index) => (
             <div key={index} className="project-card">
               <div className="project-img-wrap">
-                <img src={project.image} alt={project.title} />
-              </div>
-              <div className="project-info">
-                <div>
-                  <div className="project-cat">{project.category}</div>
-                  <h3 className="project-name">{project.title}</h3>
+                <img src={project.image} alt={project.title} className="project-main-img" />
+                <div className="project-hover-content">
+                  <img src={project.logo} alt={`${project.title} logo`} className="project-logo" />
+                  <p className="project-about">{project.about}</p>
                 </div>
-                <div className="project-year">{project.year}</div>
               </div>
             </div>
           ))}
