@@ -1,6 +1,9 @@
 import { useEffect, useState, useRef } from 'react'
+import { Routes, Route } from 'react-router-dom'
 import { Mail, Phone } from 'lucide-react'
 import portraitImg from './assets/hero.png'
+import ContactModal from './components/ContactModal.jsx'
+import AdminResponses from './pages/AdminResponses.jsx'
 
 const GithubIcon = ({ size = 24, strokeWidth = 2, className = "" }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" className={`lucide lucide-github ${className}`}>
@@ -17,7 +20,7 @@ const LinkedinIcon = ({ size = 24, strokeWidth = 2, className = "" }) => (
   </svg>
 )
 
-function App() {
+function PortfolioPage({ onContact }) {
   const [isVisible, setIsVisible] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const workRef = useRef(null)
@@ -159,7 +162,7 @@ function App() {
         </ul>
 
         <div className="nav-right">
-          <a href="#" className="nav-cta">Contact</a>
+          <button className="nav-cta" onClick={() => { onContact(); setIsMenuOpen(false); }}>Contact</button>
           <button className={`menu-toggle ${isMenuOpen ? 'active' : ''}`} onClick={() => setIsMenuOpen(!isMenuOpen)}>
             <span></span>
             <span></span>
@@ -174,7 +177,7 @@ function App() {
           <li><a href="#work" onClick={scrollToWork}>Work</a></li>
           <li><a href="#process" onClick={scrollToProcess}>Process</a></li>
           <li><a href="#tech" onClick={scrollToTech}>Technology</a></li>
-          <li><a href="#" className="mobile-nav-cta" onClick={() => setIsMenuOpen(false)}>Contact</a></li>
+          <li><button className="mobile-nav-cta" onClick={() => { onContact(); setIsMenuOpen(false); }}>Contact</button></li>
         </ul>
       </div>
 
@@ -266,11 +269,6 @@ function App() {
             </div>
             <span>Scroll to explore</span>
           </div>
-
-          <a href="#" className="resume-link">
-            <span>View Resume</span>
-            <div className="resume-dot"></div>
-          </a>
         </div>
       </section>
 
@@ -431,11 +429,28 @@ function App() {
           </div>
         </div>
         <div className="footer-bottom">
-          <div className="footer-logo">H<sup>2</sup> <span style={{marginLeft: '12px', fontSize: '14px', letterSpacing: '0.1em', fontWeight: '400'}}>HUZAIFA HARIS</span></div>
+          <a href="#" className="nav-logo" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
+            <div className="nav-logo-mark">H<sup>2</sup></div>
+            <span className="nav-logo-name">Huzaifa Haris</span>
+          </a>
           <div className="footer-copy">&copy; {new Date().getFullYear()} All Rights Reserved.</div>
         </div>
       </footer>
     </div>
+  )
+}
+
+function App() {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<PortfolioPage onContact={() => setIsModalOpen(true)} />} />
+        <Route path="/lets-build-project-hsquare" element={<AdminResponses />} />
+      </Routes>
+      <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+    </>
   )
 }
 
