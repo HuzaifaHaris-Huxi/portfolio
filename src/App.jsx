@@ -1,14 +1,35 @@
 import { useEffect, useState, useRef } from 'react'
+import { Mail, Phone } from 'lucide-react'
 import portraitImg from './assets/hero.png'
+
+const GithubIcon = ({ size = 24, strokeWidth = 2, className = "" }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" className={`lucide lucide-github ${className}`}>
+    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+    <path d="M9 18c-4.51 2-5-2-7-2"/>
+  </svg>
+)
+
+const LinkedinIcon = ({ size = 24, strokeWidth = 2, className = "" }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" className={`lucide lucide-linkedin ${className}`}>
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+    <rect width="4" height="12" x="2" y="9"/>
+    <circle cx="4" cy="4" r="2"/>
+  </svg>
+)
 
 function App() {
   const [isVisible, setIsVisible] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const workRef = useRef(null)
   const sliderRef = useRef(null)
+  const processRef = useRef(null)
+  const techRef = useRef(null)
 
   useEffect(() => {
-    setIsVisible(true)
+    const timer = setTimeout(() => {
+      setIsVisible(true)
+    }, 50)
+    return () => clearTimeout(timer)
   }, [])
 
   const projects = [
@@ -62,6 +83,39 @@ function App() {
     }
   ]
 
+  const processes = [
+    {
+      id: '01',
+      title: 'Discovery & Strategy',
+      desc: 'Understanding the core problem, defining project goals, and establishing the overall strategic vision.',
+    },
+    {
+      id: '02',
+      title: 'Planning & Architecture',
+      desc: 'Mapping out user stories, technical stack selection, and laying down a robust scalable architecture.',
+    },
+    {
+      id: '03',
+      title: 'UI/UX Design',
+      desc: 'Crafting premium, intuitive interfaces and prototyping the user journey for maximum engagement.',
+    },
+    {
+      id: '04',
+      title: 'Agile Development',
+      desc: 'Iterative sprints of coding, focusing on building high-performance, maintainable, and clean software.',
+    },
+    {
+      id: '05',
+      title: 'Testing & QA',
+      desc: 'Rigorous quality assurance, automated testing, and performance optimization across all devices.',
+    },
+    {
+      id: '06',
+      title: 'Deployment & Iteration',
+      desc: 'Smooth production launch followed by continuous monitoring, feedback gathering, and refinement.',
+    }
+  ]
+
   const scrollLeft = () => {
     sliderRef.current?.scrollBy({ left: -400, behavior: 'smooth' })
   }
@@ -73,6 +127,18 @@ function App() {
   const scrollToWork = (e) => {
     if (e) e.preventDefault()
     workRef.current?.scrollIntoView({ behavior: 'smooth' })
+    setIsMenuOpen(false)
+  }
+
+  const scrollToProcess = (e) => {
+    if (e) e.preventDefault()
+    processRef.current?.scrollIntoView({ behavior: 'smooth' })
+    setIsMenuOpen(false)
+  }
+
+  const scrollToTech = (e) => {
+    if (e) e.preventDefault()
+    techRef.current?.scrollIntoView({ behavior: 'smooth' })
     setIsMenuOpen(false)
   }
 
@@ -88,8 +154,8 @@ function App() {
         <ul className="nav-links">
           <li><a href="#">About</a></li>
           <li><a href="#work" onClick={scrollToWork}>Work</a></li>
-          <li><a href="#">Process</a></li>
-          <li><a href="#">Technology</a></li>
+          <li><a href="#process" onClick={scrollToProcess}>Process</a></li>
+          <li><a href="#tech" onClick={scrollToTech}>Technology</a></li>
         </ul>
 
         <div className="nav-right">
@@ -106,19 +172,12 @@ function App() {
         <ul className="mobile-nav-links">
           <li><a href="#" onClick={() => setIsMenuOpen(false)}>About</a></li>
           <li><a href="#work" onClick={scrollToWork}>Work</a></li>
-          <li><a href="#" onClick={() => setIsMenuOpen(false)}>Process</a></li>
-          <li><a href="#" onClick={() => setIsMenuOpen(false)}>Technology</a></li>
+          <li><a href="#process" onClick={scrollToProcess}>Process</a></li>
+          <li><a href="#tech" onClick={scrollToTech}>Technology</a></li>
           <li><a href="#" className="mobile-nav-cta" onClick={() => setIsMenuOpen(false)}>Contact</a></li>
         </ul>
       </div>
 
-      {/* SIDE SOCIALS */}
-      <div className="side-socials">
-        <a href="#">Github</a>
-        <a href="#">LinkedIn</a>
-        <a href="#">Twitter</a>
-        <a href="#">Behance</a>
-      </div>
 
       {/* HERO */}
       <section className="hero">
@@ -257,12 +316,125 @@ function App() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <section style={{ height: '50vh', display: 'flex', alignItems: 'center', justifyContent: 'center', borderTop: '1px solid var(--line)' }}>
-        <h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(32px, 4vw, 64px)', fontWeight: 800, opacity: 0.1, textTransform: 'uppercase' }}>
-          Available for new projects 2024
-        </h2>
+      {/* PROCESS SECTION */}
+      <section id="process" ref={processRef} className="process-section">
+        <div className="process-container">
+          <div className="process-sticky">
+            <div className="process-num">(Methodology)</div>
+            <h2 className="process-title">Process</h2>
+            <p className="process-subtitle">A systematic approach to transforming complex problems into elegant, high-performance software solutions.</p>
+          </div>
+
+          <div className="process-list">
+            {processes.map((proc, index) => (
+              <div key={index} className="process-item">
+                <div className="process-item-num">{proc.id}</div>
+                <div className="process-item-content">
+                  <h3 className="process-item-title">{proc.title}</h3>
+                  <p className="process-item-desc">{proc.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
+
+      {/* TECHNOLOGY SECTION */}
+      <section id="tech" ref={techRef} className="tech-section">
+
+
+        <div className="tech-header">
+          <div className="tech-num">(Stack)</div>
+          <h2 className="tech-title">Technology</h2>
+        </div>
+        <div className="tech-bento">
+          <div className="bento-item">
+            <div className="bento-content">
+              <h3 className="bento-title">Frontend Engine</h3>
+              <p className="bento-desc">Building lightning-fast, interactive user interfaces with modern web standards and deep attention to performance.</p>
+            </div>
+            <div className="bento-tags">
+              <span>React</span>
+              <span>Next.js</span>
+              <span>TailwindCSS</span>
+            </div>
+          </div>
+          <div className="bento-item">
+            <div className="bento-content">
+              <h3 className="bento-title">Backend Architecture</h3>
+              <p className="bento-desc">Robust, scalable server-side logic and REST/GraphQL APIs.</p>
+            </div>
+            <div className="bento-tags">
+              <span>Django</span>
+              <span>Python</span>
+              <span>PHP</span>
+            </div>
+          </div>
+          <div className="bento-item">
+            <div className="bento-content">
+              <h3 className="bento-title">Database Systems</h3>
+              <p className="bento-desc">Secure, optimized data models and storage solutions.</p>
+            </div>
+            <div className="bento-tags">
+              <span>PostgreSQL</span>
+              <span>MySQL</span>
+              <span>SQLite 3</span>
+            </div>
+          </div>
+          <div className="bento-item">
+            <div className="bento-content">
+              <h3 className="bento-title">Infrastructure & DevOps</h3>
+              <p className="bento-desc">Seamless deployment pipelines, automated testing, containerization, and reliable cloud hosting.</p>
+            </div>
+            <div className="bento-tags">
+              <span>AWS</span>
+              <span>Docker</span>
+              <span>Vercel</span>
+              <span>GitHub Actions</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer id="contact" className="footer-section">
+        <div className="footer-top">
+          <h2 className="footer-cta-title">Let's build something<br/>extra<br/>ordinary.</h2>
+          <div className="footer-contact-info">
+            <div className="footer-block">
+              <span className="footer-label">Email</span>
+              <a href="mailto:huzaifaharis.dev@gmail.com" className="footer-link">
+                <Mail size={20} strokeWidth={1.5} />
+                huzaifaharis.dev@gmail.com
+              </a>
+            </div>
+            <div className="footer-block">
+              <span className="footer-label">Phone</span>
+              <a href="tel:03225456517" className="footer-link">
+                <Phone size={20} strokeWidth={1.5} />
+                0322-5456517
+              </a>
+            </div>
+            <div className="footer-block">
+              <span className="footer-label">Socials</span>
+              <div className="footer-socials">
+                <a href="https://www.linkedin.com/in/huzaifa-haris-aa8281262/" target="_blank" rel="noreferrer" className="footer-link">
+                  <LinkedinIcon size={20} strokeWidth={1.5} />
+                  LinkedIn
+                </a>
+                <a href="https://github.com/HuzaifaHaris-Huxi" target="_blank" rel="noreferrer" className="footer-link">
+                  <GithubIcon size={20} strokeWidth={1.5} />
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="footer-bottom">
+          <div className="footer-logo">H<sup>2</sup> <span style={{marginLeft: '12px', fontSize: '14px', letterSpacing: '0.1em', fontWeight: '400'}}>HUZAIFA HARIS</span></div>
+          <div className="footer-copy">&copy; {new Date().getFullYear()} All Rights Reserved.</div>
+        </div>
+      </footer>
     </div>
   )
 }
