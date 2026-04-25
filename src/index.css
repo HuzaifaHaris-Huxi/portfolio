@@ -110,7 +110,6 @@
 html {
   font-size: 16px;
   scroll-behavior: smooth;
-  overflow-x: hidden; /* prevent horizontal scrollbar from any overflowing child */
 }
 
 body {
@@ -118,7 +117,7 @@ body {
   color: var(--fg);
   font-family: 'Instrument Sans', sans-serif;
   min-height: 100vh;
-  overflow-x: hidden;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
 }
 
