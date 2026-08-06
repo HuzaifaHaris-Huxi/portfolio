@@ -395,7 +395,6 @@ function PortfolioPage({ onContact }) {
                       <span className="live-dot"></span> {project.isShopify ? 'Live Store' : 'Live Site'}
                     </span>
                   )}
-                  <span className="badge year-badge">{project.year}</span>
                 </div>
 
                 {/* Hover Content Overlay: Name instead of logo + Visited Link */}
@@ -432,7 +431,6 @@ function PortfolioPage({ onContact }) {
                     {project.link && <ExternalLinkIcon size={18} className="inline-link-icon" />}
                   </h3>
                 </div>
-                <span className="project-year">{project.year}</span>
               </div>
             </div>
           ))}
