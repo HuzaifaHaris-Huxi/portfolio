@@ -21,9 +21,24 @@ const LinkedinIcon = ({ size = 24, strokeWidth = 2, className = "" }) => (
   </svg>
 )
 
+const ExternalLinkIcon = ({ size = 16, className = "" }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+    <polyline points="15 3 21 3 21 9"></polyline>
+    <line x1="10" y1="14" x2="21" y2="3"></line>
+  </svg>
+)
+
+const ShopifyIcon = ({ size = 14, className = "" }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M15.34 2.89c-.39-.04-.79.11-1.05.4l-1.7 1.86-1.38-3.28A.96.96 0 0 0 10.25 1a.96.96 0 0 0-.86.7L6.21 7.35 3.41 8.02A.96.96 0 0 0 2.7 9.1l1.54 8.77A.96.96 0 0 0 5.19 18.67h9.81a.96.96 0 0 0 .95-.8l1.54-8.77a.96.96 0 0 0-.62-1.08l-4.15-1.71z"/>
+  </svg>
+)
+
 function PortfolioPage({ onContact }) {
   const [isVisible, setIsVisible] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [activeCategory, setActiveCategory] = useState('All')
   const workRef = useRef(null)
   const sliderRef = useRef(null)
   const processRef = useRef(null)
@@ -38,16 +53,49 @@ function PortfolioPage({ onContact }) {
 
   const projects = [
     {
+      title: 'CarSound',
+      category: 'Shopify Store',
+      type: 'Shopify',
+      year: '2025',
+      image: new URL('./project/carsound.webp', import.meta.url).href,
+      about: 'High-performance Danish Shopify e-commerce platform specialized in automotive audio systems, amplifiers, custom sound setups & accessories.',
+      link: 'https://carsound.dk',
+      isShopify: true,
+    },
+    {
+      title: 'Power Culture',
+      category: 'Shopify Store',
+      type: 'Shopify',
+      year: '2024',
+      image: new URL('./project/power_culture.webp', import.meta.url).href,
+      about: 'Modern Danish Shopify store built for high-energy fitness apparel & brand culture, featuring custom layouts and optimized conversion flow.',
+      link: 'https://www.powerculture.dk',
+      isShopify: true,
+    },
+    {
+      title: 'BarkDNA',
+      category: 'Shopify Store',
+      type: 'Shopify',
+      year: '2024',
+      image: new URL('./project/BarkDNA.webp', import.meta.url).href,
+      about: 'High-conversion Shopify e-commerce storefront for canine genetics & health testing, featuring sleek UI components and fast load speeds.',
+      link: 'https://barkdna.com',
+      isShopify: true,
+    },
+    {
       title: 'Qonkar',
       category: 'Platform',
+      type: 'Platform',
       year: '2024',
       image: new URL('./project/1.qonkar.png', import.meta.url).href,
       logo: new URL('./project/project_logos/qonkar.svg', import.meta.url).href,
       about: 'A comprehensive digital platform revolutionizing local services with an intuitive user experience and robust functionality.',
+      link: 'https://qonkar.com',
     },
     {
       title: 'Scholian',
       category: 'Education',
+      type: 'EdTech',
       year: '2023',
       image: new URL('./project/2.scholian.png', import.meta.url).href,
       logo: new URL('./project/project_logos/scholian.svg', import.meta.url).href,
@@ -56,6 +104,7 @@ function PortfolioPage({ onContact }) {
     {
       title: 'Fayz Soft',
       category: 'Software Solutions',
+      type: 'Platform',
       year: '2023',
       image: new URL('./project/3.fayz_soft.png', import.meta.url).href,
       logo: new URL('./project/project_logos/fayz_soft.svg', import.meta.url).href,
@@ -64,6 +113,7 @@ function PortfolioPage({ onContact }) {
     {
       title: 'Vetuk',
       category: 'Veterinary Services',
+      type: 'Healthcare',
       year: '2024',
       image: new URL('./project/4.vetuk.png', import.meta.url).href,
       logo: new URL('./project/project_logos/vetuk.svg', import.meta.url).href,
@@ -72,6 +122,7 @@ function PortfolioPage({ onContact }) {
     {
       title: 'Doctor',
       category: 'Healthcare',
+      type: 'Healthcare',
       year: '2024',
       image: new URL('./project/5.Doctor.png', import.meta.url).href,
       logo: new URL('./project/project_logos/doctor.svg', import.meta.url).href,
@@ -80,12 +131,20 @@ function PortfolioPage({ onContact }) {
     {
       title: 'Sellvixa',
       category: 'E-commerce',
+      type: 'Shopify',
       year: '2024',
       image: new URL('./project/6.sellvixa.png', import.meta.url).href,
       logo: new URL('./project/project_logos/sellvixa.svg', import.meta.url).href,
       about: 'A premium e-commerce experience featuring high-performance storefronts, secure payments, and dynamic inventory.',
     }
   ]
+
+  const filteredProjects = projects.filter(p => {
+    if (activeCategory === 'Shopify Stores') return p.type === 'Shopify' || p.isShopify
+    if (activeCategory === 'Platforms') return p.type === 'Platform'
+    if (activeCategory === 'Healthcare & EdTech') return p.type === 'Healthcare' || p.type === 'EdTech'
+    return true
+  })
 
   const processes = [
     {
@@ -121,11 +180,11 @@ function PortfolioPage({ onContact }) {
   ]
 
   const scrollLeft = () => {
-    sliderRef.current?.scrollBy({ left: -400, behavior: 'smooth' })
+    sliderRef.current?.scrollBy({ left: -450, behavior: 'smooth' })
   }
 
   const scrollRight = () => {
-    sliderRef.current?.scrollBy({ left: 400, behavior: 'smooth' })
+    sliderRef.current?.scrollBy({ left: 450, behavior: 'smooth' })
   }
 
   const scrollToWork = (e) => {
@@ -206,7 +265,7 @@ function PortfolioPage({ onContact }) {
             <a href="#work" className="btn-primary" onClick={scrollToWork}>
               View Work
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                <path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </a>
             <a
@@ -215,7 +274,7 @@ function PortfolioPage({ onContact }) {
               className="btn-ghost"
             >
               <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                <path d="M5 1v8M1 5l4 4 4-4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M5 1v8M1 5l4 4 4-4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
               Download CV
             </a>
@@ -255,13 +314,14 @@ function PortfolioPage({ onContact }) {
 
             <div className="tags">
               <span className="tag">Fullstack</span>
+              <span className="tag">Shopify Theme Dev</span>
+              <span className="tag">Liquid</span>
               <span className="tag">React/Next.js</span>
               <span className="tag">Django</span>
               <span className="tag">Python</span>
               <span className="tag">PHP</span>
               <span className="tag">PostgreSQL</span>
               <span className="tag">MySQL</span>
-
             </div>
           </div>
         </div>
@@ -280,10 +340,23 @@ function PortfolioPage({ onContact }) {
       {/* WORK SECTION */}
       <section id="work" ref={workRef}>
         <div className="work-header">
-          <div>
-            <div className="work-num">(001 — 006)</div>
+          <div className="work-header-left">
+            <div className="work-num">(001 — {String(projects.length).padStart(3, '0')})</div>
             <h2 className="work-title">Curated Work</h2>
           </div>
+
+          <div className="work-filter-tabs">
+            {['All', 'Shopify Stores', 'Platforms', 'Healthcare & EdTech'].map(cat => (
+              <button
+                key={cat}
+                className={`filter-btn ${activeCategory === cat ? 'active' : ''}`}
+                onClick={() => setActiveCategory(cat)}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+
           <div className="work-nav-buttons">
             <button className="slider-btn" onClick={scrollLeft} aria-label="Previous">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -299,20 +372,67 @@ function PortfolioPage({ onContact }) {
         </div>
 
         <div className="project-grid" ref={sliderRef}>
-          {projects.map((project, index) => (
-            <div key={index} className="project-card">
+          {filteredProjects.map((project, index) => (
+            <div
+              key={index}
+              className="project-card"
+              onClick={() => {
+                if (project.link) window.open(project.link, '_blank', 'noopener,noreferrer');
+              }}
+            >
               <div className="project-img-wrap">
                 <img src={project.image} alt={project.title} className="project-main-img" />
+
+                {/* Floating Badges */}
+                <div className="project-top-badges">
+                  {project.isShopify && (
+                    <span className="badge shopify-badge">
+                      <ShopifyIcon /> Shopify
+                    </span>
+                  )}
+                  {project.link && (
+                    <span className="badge live-badge">
+                      <span className="live-dot"></span> {project.isShopify ? 'Live Store' : 'Live Site'}
+                    </span>
+                  )}
+                  <span className="badge year-badge">{project.year}</span>
+                </div>
+
+                {/* Hover Content Overlay: Name instead of logo + Visited Link */}
                 <div className="project-hover-content">
-                  <img src={project.logo} alt={`${project.title} logo`} className="project-logo" />
+                  <div className="project-hover-header">
+                    <span className="project-hover-cat">{project.category}</span>
+                    <h3 className="project-hover-title">{project.title}</h3>
+                  </div>
+                  
                   <p className="project-about">{project.about}</p>
+
+                  {project.link ? (
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="project-visited-link"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <span>{project.isShopify ? 'Visit Live Store' : 'Visit Live Website'}</span>
+                      <ExternalLinkIcon size={16} />
+                    </a>
+                  ) : (
+                    <span className="project-preview-tag">Featured Showcase</span>
+                  )}
                 </div>
               </div>
+
               <div className="project-info">
                 <div>
                   <div className="project-cat">{project.category}</div>
-                  <h3 className="project-name">{project.title}</h3>
+                  <h3 className="project-name">
+                    {project.title}
+                    {project.link && <ExternalLinkIcon size={18} className="inline-link-icon" />}
+                  </h3>
                 </div>
+                <span className="project-year">{project.year}</span>
               </div>
             </div>
           ))}
@@ -344,13 +464,23 @@ function PortfolioPage({ onContact }) {
 
       {/* TECHNOLOGY SECTION */}
       <section id="tech" ref={techRef} className="tech-section">
-
-
         <div className="tech-header">
           <div className="tech-num">(Stack)</div>
           <h2 className="tech-title">Technology</h2>
         </div>
         <div className="tech-bento">
+          <div className="bento-item">
+            <div className="bento-content">
+              <h3 className="bento-title">Shopify & E-Commerce</h3>
+              <p className="bento-desc">Crafting custom Shopify themes, Liquid templating, Storefront API integrations, custom sections, and conversion-focused UX.</p>
+            </div>
+            <div className="bento-tags">
+              <span>Shopify Theme Dev</span>
+              <span>Liquid</span>
+              <span>Storefront API</span>
+              <span>Custom Sections</span>
+            </div>
+          </div>
           <div className="bento-item">
             <div className="bento-content">
               <h3 className="bento-title">Frontend Engine</h3>
